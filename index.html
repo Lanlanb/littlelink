@@ -29,37 +29,67 @@
  <link rel="stylesheet" href="css/skeleton-auto.css">
   <!-- CSS themes -->
   <style>
-.theme-selector {
-body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
 .theme-switcher {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     margin-bottom: 20px;
 }
 
-#themeToggle {
-    padding: 10px 20px;
-    font-size: 16px;
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+}
+
+/* Hide default checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Style slider */
+.slider {
+    position: absolute;
     cursor: pointer;
-    border: none;
-    background-color: #333;
-    color: white;
-    border-radius: 5px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 25px;
 }
 
-/* Tema Gelap */
-.dark-theme {
-    background-color: #333;
-    color: white;
-}
-
-.dark-theme #themeToggle {
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 17px;
+    width: 17px;
+    left: 4px;
+    bottom: 4px;
     background-color: white;
-    color: #333;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+/* When checked, move the slider */
+input:checked + .slider {
+    background-color: #333;
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+/* Gaya untuk Dark Mode */
+body.dark-theme {
+    background-color: #333;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
 }
   
 </style>
@@ -98,10 +128,14 @@ body {
           Edit the "Short Bio" section tell users about yourself or your brand.
 
         -->
-            <!-- Tombol Tema -->
-       <div class="theme-switcher">
-            <button id="themeToggle" onclick="toggleTheme()">Switch Theme</button>
-       </div>
+               <!-- Sakelar Dark Mode -->
+    <div class="theme-switcher">
+        <label class="switch">
+            <input type="checkbox" id="themeToggle" onclick="toggleTheme()">
+            <span class="slider round"></span>
+        </label>
+        <p>Dark Mode</p>
+    </div>
 
         <!-- Your Image Here -->
         <img src="images/littlelink.svg" class="avatar" srcset="images/littlelink.svg 2x" alt="">
@@ -111,18 +145,22 @@ body {
 
         <!-- Short Bio -->
         <p>Data Enthusiast | Designer | Managerial Interest.</p>
-
-        <!-- theme -->
-       <section class="theme-selector">
-       <span id="theme-auto" class="theme-link">Auto</span> |
-       <span id="theme-light" class="theme-link">Light</span> |
-       <span id="theme-dark" class="theme-link">Dark</span>
-      </section>
         
         <script>
-function toggleTheme() {
+function function toggleTheme() {
     document.body.classList.toggle("dark-theme");
+    const isDarkMode = document.body.classList.contains("dark-theme");
+    localStorage.setItem("darkMode", isDarkMode); // Simpan preferensi pengguna
 }
+
+// Periksa preferensi dark mode pengguna saat halaman dimuat
+window.onload = function() {
+    const darkMode = localStorage.getItem("darkMode") === "true";
+    if (darkMode) {
+        document.body.classList.add("dark-theme");
+        document.getElementById("themeToggle").checked = true;
+    }
+};
         </script>
         
         <!--
