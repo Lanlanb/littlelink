@@ -31,7 +31,23 @@
             Dark:   css/skeleton-dark.css
      
     <link rel="stylesheet" href="css/skeleton-auto.css">
+  <!-- CSS themes -->
+  <style>
+.theme-selector {
+    margin: 20px 0;
+}
 
+.theme-link {
+    cursor: pointer;
+    color: blue; /* Warna teks link */
+    text-decoration: underline; /* Garis bawah untuk menunjukkan link */
+    transition: color 0.3s;
+}
+
+.theme-link:hover {
+    color: darkblue; /* Mengubah warna saat hover */
+}
+</style>
     <!-- Brand Styles -->
     <link rel="stylesheet" href="css/brands.css">
 
@@ -77,8 +93,39 @@
         <!-- Short Bio -->
         <p>Data Enthusiast | Designer | Managerial Interest.</p>
 
-        <!--
+        <!-- theme -->
+       <section class="theme-selector">
+       <span id="theme-auto" class="theme-link">Auto</span> |
+       <span id="theme-light" class="theme-link">Light</span> |
+       <span id="theme-dark" class="theme-link">Dark</span>
+      </section>
+        <script>
+    const themeLinks = document.querySelectorAll('.theme-link');
 
+    themeLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            const theme = link.id.replace('theme-', ''); // Mengambil nama tema dari ID link
+            changeTheme(theme);
+        });
+    });
+
+    function changeTheme(theme) {
+        // Hapus stylesheet tema yang ada
+        const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+        stylesheets.forEach(sheet => {
+            if (sheet.href.includes('skeleton')) {
+                sheet.parentNode.removeChild(sheet);
+            }
+        });
+
+        // Tambahkan stylesheet tema yang baru
+        const newTheme = document.createElement('link');
+        newTheme.rel = 'stylesheet';
+        newTheme.href = `css/skeleton-${theme}.css`; // Menggunakan tema yang dipilih
+        document.head.appendChild(newTheme);
+    }
+        </script>
+        <!--
           ## Breaking down <a> attributes:
           
           1.) class="button button-default" | The first "button" here is telling this <a> tag that it should make this element a button and applies the default styling in `css/brands.css`.
