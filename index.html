@@ -26,27 +26,42 @@
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="css/normalize.css">
-            Auto:   css/skeleton-auto.css
-            Light:  css/skeleton-light.css
-            Dark:   css/skeleton-dark.css
-     
-    <link rel="stylesheet" href="css/skeleton-auto.css">
+ <link rel="stylesheet" href="css/skeleton-auto.css">
   <!-- CSS themes -->
   <style>
 .theme-selector {
-    margin: 20px 0;
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.theme-link {
+.theme-switcher {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#themeToggle {
+    padding: 10px 20px;
+    font-size: 16px;
     cursor: pointer;
-    color: blue; /* Warna teks link */
-    text-decoration: underline; /* Garis bawah untuk menunjukkan link */
-    transition: color 0.3s;
+    border: none;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
 }
 
-.theme-link:hover {
-    color: darkblue; /* Mengubah warna saat hover */
+/* Tema Gelap */
+.dark-theme {
+    background-color: #333;
+    color: white;
 }
+
+.dark-theme #themeToggle {
+    background-color: white;
+    color: #333;
+}
+  
 </style>
     <!-- Brand Styles -->
     <link rel="stylesheet" href="css/brands.css">
@@ -83,6 +98,10 @@
           Edit the "Short Bio" section tell users about yourself or your brand.
 
         -->
+            <!-- Tombol Tema -->
+       <div class="theme-switcher">
+            <button id="themeToggle" onclick="toggleTheme()">Switch Theme</button>
+       </div>
 
         <!-- Your Image Here -->
         <img src="images/littlelink.svg" class="avatar" srcset="images/littlelink.svg 2x" alt="">
@@ -99,32 +118,13 @@
        <span id="theme-light" class="theme-link">Light</span> |
        <span id="theme-dark" class="theme-link">Dark</span>
       </section>
+        
         <script>
-    const themeLinks = document.querySelectorAll('.theme-link');
-
-    themeLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            const theme = link.id.replace('theme-', ''); // Mengambil nama tema dari ID link
-            changeTheme(theme);
-        });
-    });
-
-    function changeTheme(theme) {
-        // Hapus stylesheet tema yang ada
-        const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
-        stylesheets.forEach(sheet => {
-            if (sheet.href.includes('skeleton')) {
-                sheet.parentNode.removeChild(sheet);
-            }
-        });
-
-        // Tambahkan stylesheet tema yang baru
-        const newTheme = document.createElement('link');
-        newTheme.rel = 'stylesheet';
-        newTheme.href = `css/skeleton-${theme}.css`; // Menggunakan tema yang dipilih
-        document.head.appendChild(newTheme);
-    }
+function toggleTheme() {
+    document.body.classList.toggle("dark-theme");
+}
         </script>
+        
         <!--
           ## Breaking down <a> attributes:
           
